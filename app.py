@@ -3,7 +3,7 @@ from flask import Flask,jsonify,request,render_template,redirect,Response
 from flask_restful import Api,Resource, reqparse
 from werkzeug.utils import secure_filename
 from resources.user import *
-#from flask_mysqldb import MySQL
+from flask_mysqldb import MySQL
 from db import db
 from flask_jwt_extended import JWTManager
 
