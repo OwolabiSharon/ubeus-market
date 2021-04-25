@@ -3,7 +3,7 @@ from flask import Flask,jsonify,request,render_template,redirect,Response
 from flask_restful import Api,Resource, reqparse
 from werkzeug.utils import secure_filename
 from resources.user import *
-from flask_mysqldb import MySQL
+#from flask_mysqldb import MySQL
 from db import db
 from flask_jwt_extended import JWTManager
 
@@ -11,7 +11,7 @@ from flask_jwt_extended import JWTManager
 
 #app = Flask(__name__)
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'mysql://root:@#Phone123@localhost/world')
+app.config['SQLALCHEMY_DATABASE_URI'] ='mysql://root:@#Phone123@localhost/world'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = '!@#$%^&*()_+=-0987654321'
 app.config['PROPAGATE_EXCEPTIONS'] = True
