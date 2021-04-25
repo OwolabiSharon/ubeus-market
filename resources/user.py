@@ -129,7 +129,7 @@ class Create_store(Resource):
         ki = new_store.json2()
         return{
              "status": True,
-             'data': ki,
+             'data': 'ki',
              'message':'store created succesfully'
              },201
 class update_products(Resource):
