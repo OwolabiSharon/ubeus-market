@@ -114,8 +114,8 @@ class Create_store(Resource):
     @jwt_required
     def post(self):
         data = Create_store.parser.parse_args()
-        store = Store.query.filter_by(name=data['store_name']).first()
-        user = User.query.filter_by(username=data['username'])
+        store = "Store.find_by_name(data['store_name'])"
+        user = "User.find_by_username(data['username'])"
         if store:
             return {
                   'status': False,
