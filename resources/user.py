@@ -129,7 +129,7 @@ class Create_store(Resource):
         ki = new_store.json2()
         return{
              "status": True,
-             'data': 'ki',
+             'data': ki,
              'message':'store created succesfully'
              },201
 class update_products(Resource):
@@ -223,7 +223,11 @@ class upload_image(Resource):
 
 class First_page(Resource):
     def get(self):
-        return {'stores': list(map(lambda x: x.json(), Store.query.all()))}
+        try:
+            return {'stores': list(map(lambda x: x.json(), Store.query.all()))}
+        except:
+            return {"message":"little error occured when trying to access db"}
+
 
 
 
@@ -236,7 +240,7 @@ class view_store(Resource):
             return{
                  "status": True,
                  "data": store.json2(),
-                 'message':'image uploaded to product info'
+                 'message':'this is the store'
                  },201
 
 
