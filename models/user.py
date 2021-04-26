@@ -54,7 +54,7 @@ class Store(db.Model):
     name = db.Column(db.String(900))
     description = db.Column(db.String(900))
     store_address = db.Column(db.String(900))
-    inventory = db.relationship('Inventory', lazy='dynamic',backref='parent')
+    inventory = db.relationship('Inventory', lazy='dynamic')
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False )
     user = db.relationship('User')#,# foreign_keys= user_id)

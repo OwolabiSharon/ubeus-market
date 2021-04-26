@@ -125,7 +125,7 @@ class Create_store(Resource):
         Store.save_to_db(new_store)
         new_inventory = Inventory(data['store_name'],0,new_store.id)
 
-        Inventory.save_to_db(new_inventory)
+        #Inventory.save_to_db(new_inventory)
         ki = new_store.json2()
         return{
              "status": True,
