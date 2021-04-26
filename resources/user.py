@@ -127,11 +127,15 @@ class Create_store(Resource):
 
         Inventory.save_to_db(new_inventory)
         ki = new_store.json2()
-        return{
-             "status": True,
-             'data': ki,
-             'message':'store created succesfully'
-             },201
+        try:
+            return{
+                 "status": True,
+                 'data': ki,
+                 'message':'store created succesfully'
+                 },201
+        except:
+            return {"message":"little error occured when trying to access db"}
+
 class update_products(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('Product_name',
@@ -174,12 +178,14 @@ class update_products(Resource):
             Product.save_to_db(new_product)
             inventory.NO_of_products = inventory.NO_of_products + 1
 
-            return{
-                 "status": True,
-                 'data': new_product.json(),
-                 'message':'store created succesfully'
-                 },201
-
+            try:
+                return{
+                     "status": True,
+                     'data': new_product.json(),
+                     'message':'store created succesfully'
+                     },201
+            except:
+                return {"message":"little error occured when trying to access db"}
         return{
              "status": False,
              'message':'product is already in your inventory'
