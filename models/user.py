@@ -102,7 +102,7 @@ class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(70))
     NO_of_products = db.Column(db.Integer,default = None)
-    products = db.relationship('Product', lazy='dynamic',backref='parent')
+    products = db.relationship('Product', lazy='dynamic')
 
     user_id = db.Column(db.Integer, db.ForeignKey('store.id'), nullable=False )
     user = db.relationship('Store')#,# foreign_keys= user_id)
@@ -143,7 +143,7 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(900))
     description = db.Column(db.String(900))
-    image = db.relationship('Image', lazy='dynamic',backref='parent')
+    image = db.relationship('Image', lazy='dynamic')
     cost = db.Column(db.Integer)
     Number_available = db.Column(db.Integer)
 
