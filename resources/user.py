@@ -77,11 +77,16 @@ class login(Resource):
         if user:
             access_token = create_access_token(identity=user.id,fresh =True)
             #refresh_token= create_refresh_token(user.id)
-            return {
-                  'status': True,
-                  'data': access_token,
-                  'message':'you are logged in'
-            },200
+            try:
+                return {
+                      'status': True,
+                      'data': access_token,
+                      'message':'you are logged in'
+                },200
+            except:
+                {'message':'a little error occuredwhen trying to access the database'}
+
+
         return {
         'status':True,
         'status':False,
@@ -220,7 +225,7 @@ class upload_image(Resource):
             return{
                  "status": True,
                  'message':'image uploaded to product info'
-                 },201
+                 },200
 
         return{
              "status": False,
@@ -243,11 +248,15 @@ class view_store(Resource):
 
         store = Store.find_by_name(name)
         if store:
-            return{
-                 "status": True,
-                 "data": store.json2(),
-                 'message':'this is the store'
-                 },201
+            try:
+                return{
+                     "status": True,
+                     "data": store.json2(),
+                     'message':'this is the store'
+                     },201
+            except:
+                return {"message":"little error occured when trying to access db"}
+
 
 
 
