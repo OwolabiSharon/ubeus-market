@@ -116,7 +116,7 @@ class Create_store(Resource):
                         required=True,
                         help="This field cannot be left blank!"
                         )
-    @jwt_required()
+    #@jwt_required()
     def post(self):
         data = Create_store.parser.parse_args()
         store = Store.find_by_name(data['store_name'])
@@ -169,7 +169,7 @@ class update_products(Resource):
                         required=True,
                         help="This field cannot be left blank!"
                         )
-    @jwt_required()
+    #@jwt_required()
     def post(self):
         data = update_products.parser.parse_args()
 
@@ -203,7 +203,7 @@ class upload_image(Resource):
                         help="This field cannot be left blank!"
                         )
 
-    @jwt_required()
+    #@jwt_required()
     def post(self):
         data = upload_image.parser.parse_args()
 
