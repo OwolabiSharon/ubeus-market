@@ -6,9 +6,9 @@ class User(db.Model):
     __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(11))
-    email = db.Column(db.String(11))
-    password = db.Column(db.String(11))
+    username = db.Column(db.String(110))
+    email = db.Column(db.String(110))
+    password = db.Column(db.String(110))
 
     store = db.relationship('Store', lazy='dynamic',backref='parent')
 
