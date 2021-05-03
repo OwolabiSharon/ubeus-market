@@ -175,7 +175,13 @@ class update_products(Resource):
 
         inventory = Inventory.find_by_name(data['store_name'])
         product = Product.find_by_name(data['Product_name'])
-        if product is None:
+        if product.user_id == inventory.id:
+            return{
+                 "status": False,
+                 'message':'product is already in your inventory'
+                 },400
+
+        else:
             #file = request.files['inputFile']
             new_product = Product(data['Product_name'],data['description'],data['price'],data['Number_available'],inventory.id)
 
@@ -191,10 +197,6 @@ class update_products(Resource):
                      },201
             except:
                 return {"message":"little error occured when trying to access db"}
-        return{
-             "status": False,
-             'message':'product is already in your inventory'
-             },400
 class upload_image(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('Product_name',
