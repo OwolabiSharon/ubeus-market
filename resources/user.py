@@ -270,7 +270,7 @@ class buy_product(Resource):
 
             return{
                  "status": True,
-                 'message':'product added to wishlist'
+                 'message':'product will be shipped to you soon'
                  },201
         return {
               'status': False,
