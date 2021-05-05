@@ -9,14 +9,18 @@ class User(db.Model):
     username = db.Column(db.String(110))
     email = db.Column(db.String(110))
     password = db.Column(db.String(110))
+    wishlist = db.relationship('Wishlist', lazy='dynamic')
+    cart = db.relationship('Cart', lazy='dynamic')
+    account_balance = db.column(db.String(110)
 
     store = db.relationship('Store', lazy='dynamic',backref='parent')
 
 
-    def __init__(self, username,email,password):
+    def __init__(self, username,email,password,account_balance):
         self.username = username
         self.email = email
         self.password = password
+        self.account_balance account_balance
 
 
     def save_to_db(self):
@@ -124,18 +128,19 @@ class Store(db.Model):
     description = db.Column(db.String(900))
     store_address = db.Column(db.String(900))
     inventory = db.relationship('Inventory', lazy='dynamic')
+    account_balance = db.column(db.String(110)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False )
     user = db.relationship('User')#,# foreign_keys= user_id)
 
 
-    def __init__(self,name,description,store_address,user_id):
+    def __init__(self,name,description,store_address,account_balance,user_id):
         #self.id = _i
         self.name = name
         self.description = description
         self.store_address = store_address
+        self.account_balance = account_balance
         self.user_id = user_id
-
 
 
         #self.verification_code = verification_code
