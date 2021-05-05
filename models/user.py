@@ -9,18 +9,14 @@ class User(db.Model):
     username = db.Column(db.String(110))
     email = db.Column(db.String(110))
     password = db.Column(db.String(110))
-    wishlist = db.relationship('Wishlist', lazy='dynamic')
-    cart = db.relationship('Cart', lazy='dynamic')
-    account_balance = db.column(db.String(110)
 
     store = db.relationship('Store', lazy='dynamic',backref='parent')
 
 
-    def __init__(self, username,email,password,account_balance):
+    def __init__(self, username,email,password):
         self.username = username
         self.email = email
         self.password = password
-        self.account_balance account_balance
 
 
     def save_to_db(self):
@@ -47,75 +43,6 @@ class User(db.Model):
         return cls.query.filter_by(username=username).first()
 
 
-class Wishlist(db.Model):
-    __TableName__ = 'wishlist'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(70))
-    price = db.Column(db.Integer)
-
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False )
-    user = db.relationship('User')#,# foreign_keys= user_id)
-
-
-    def __init__(self,name,price, user_id):
-        #self.id = _i
-        self.name = name
-        self.price = price
-        self.user_id = user_id
-
-        #self.verification_code = verification_code
-
-    def save_to_db(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def delete_from_db(self):
-        db.session.delete(self)
-        db.session.commit()
-
-    @classmethod
-    def find_by_name(cls, name):
-        return cls.query.filter_by(name=name).first()
-
-    def json(self):
-        return {'name':self.name,'price':self.price}
-
-class Cart(db.Model):
-    __TableName__ = 'cart'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(70))
-    price = db.Column(db.Integer)
-
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False )
-    user = db.relationship('User')#,# foreign_keys= user_id)
-
-
-    def __init__(self,name,price,user_id):
-        #self.id = _i
-        self.name = name
-        self.price = price
-        self.user_id = user_id
-
-        #self.verification_code = verification_code
-
-    def save_to_db(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def delete_from_db(self):
-        db.session.delete(self)
-        db.session.commit()
-
-    @classmethod
-    def find_by_name(cls, name):
-        return cls.query.filter_by(name=name).first()
-
-
-    def json(self):
-        return {'name':self.name,'price':self.price}
-
 
 
 
@@ -128,19 +55,18 @@ class Store(db.Model):
     description = db.Column(db.String(900))
     store_address = db.Column(db.String(900))
     inventory = db.relationship('Inventory', lazy='dynamic')
-    account_balance = db.column(db.String(110)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False )
     user = db.relationship('User')#,# foreign_keys= user_id)
 
 
-    def __init__(self,name,description,store_address,account_balance,user_id):
+    def __init__(self,name,description,store_address,user_id):
         #self.id = _i
         self.name = name
         self.description = description
         self.store_address = store_address
-        self.account_balance = account_balance
         self.user_id = user_id
+
 
 
         #self.verification_code = verification_code
