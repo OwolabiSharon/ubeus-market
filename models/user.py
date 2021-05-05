@@ -43,6 +43,75 @@ class User(db.Model):
         return cls.query.filter_by(username=username).first()
 
 
+class Wishlist(db.Model):
+    __TableName__ = 'wishlist'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(70))
+    price = db.Column(db.Integer)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False )
+    user = db.relationship('User')#,# foreign_keys= user_id)
+
+
+    def __init__(self,name,price, user_id):
+        #self.id = _i
+        self.name = name
+        self.price = price
+        self.user_id = user_id
+
+        #self.verification_code = verification_code
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @classmethod
+    def find_by_name(cls, name):
+        return cls.query.filter_by(name=name).first()
+
+    def json(self):
+        return {'name':self.name,'price':self.price}
+
+class Cart(db.Model):
+    __TableName__ = 'cart'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(70))
+    price = db.Column(db.Integer)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False )
+    user = db.relationship('User')#,# foreign_keys= user_id)
+
+
+    def __init__(self,name,price,user_id):
+        #self.id = _i
+        self.name = name
+        self.price = price
+        self.user_id = user_id
+
+        #self.verification_code = verification_code
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @classmethod
+    def find_by_name(cls, name):
+        return cls.query.filter_by(name=name).first()
+
+
+    def json(self):
+        return {'name':self.name,'price':self.price}
+
 
 
 
