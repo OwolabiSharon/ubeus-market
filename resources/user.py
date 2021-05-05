@@ -92,8 +92,194 @@ class login(Resource):
         'status':False,
         'message':'user not found'
         },404
+class top_up(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('username',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    parser.add_argument('password',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    parser.add_argument('ammount',
+                        type=int,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    def post(self):
+        data = top_up.parser.parse_args()
+        user = User.find_by_username(data['username']) and User.find_by_password(data['password'])
+        if user:
+            user.account_balance = Integer(user.account_balance)
+            user.account_balance = user.account_balance + data['ammount']
+            user.account_balance = string(user.account_balance)
+            try:
+                return {
+                      'status': True,
+                      'data': user.account_balance,
+                      'message':'your account_balance'
+                },200
+            except:
+                {'message':'a little error occured when trying to access the database'}
 
 
+        return {
+        'status':True,
+        'status':False,
+        'message':'either your username or password is incorrect'
+        },404
+
+class add_to_wishlist(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('Product_name',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    parser.add_argument('username',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    def post(self):
+        data = add_to_wishlist.parser.parse_args()
+        Product = Product.find_by_name(data['Product_name'])
+        user = User.find_by_username(data['username'])
+        if product:
+            wishlist = Wishlist(data['Product_name'],product.price,user.id)
+            Wishlist.save_to_db(wishlist)
+            return{
+                 "status": True,
+                 'message':'product added to wishlist'
+                 },201
+        return {
+              'status': False,
+              'message':'product not found'
+        },404
+
+
+class delete_from_wishlist(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('Product_name',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    def post(self):
+        data = delete_from_wishlist.parser.parse_args()
+        Product = Wishlist.find_by_name(data['Product_name'])
+        user = User.find_by_username(data['username'])
+        if product:
+            Wishlist.save_to_db(Product)
+            return{
+                 "status": True,
+                 'message':'product removed from wishlist'
+                 },201
+        return {
+              'status': False,
+              'message':'product not in your wishlist'
+        },404
+
+
+class add_to_cart(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('Product_name',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    parser.add_argument('username',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    def post(self):
+        data = add_to_cart.parser.parse_args()
+        Product = Product.find_by_name(data['Product_name'])
+        user = User.find_by_username(data['username'])
+        if product:
+            cart = Cart(data['Product_name'],product.price,user.id)
+            Cart.save_to_db(cart)
+            return{
+                 "status": True,
+                 'message':'product added to wishlist'
+                 },201
+        return {
+              'status': False,
+              'message':'product not found'
+        },404
+
+class delete_from_cart(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('Product_name',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    def post(self):
+        data = delete_from_cart.parser.parse_args()
+        Product = Cart.find_by_name(data['Product_name'])
+        user = User.find_by_username(data['username'])
+        if product:
+            Cart.save_to_db(Product)
+            return{
+                 "status": True,
+                 'message':'product removed from your cart'
+                 },201
+        return {
+              'status': False,
+              'message':'product not in your cart'
+        },404
+
+class buy_product(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('Product_name',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    parser.add_argument('username',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    parser.add_argument('store_name',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    def post(self):
+        data = buy_product.parser.parse_args()
+        Product = Product.find_by_name(data['Product_name'])
+        user = User.find_by_username(data['username'])
+        store = Store.find_by_name(data['store_name'])
+        inventory = Inventory.find_by_name(data['store_name'])
+        if product:
+            user.account_balance = Integer(user.account_balance)
+            user.account_balance = user.account_balance - Product.price
+            store.account_balance = Integer(store.account_balance)
+            store.account_balance = store.account_balance + Product.price
+
+            inventory.NO_of_products = inventory.NO_of_products - 1
+
+            store.account_balance = string(store.account_balance)
+            user.account_balance = string(user.account_balance)
+
+            return{
+                 "status": True,
+                 'message':'product added to wishlist'
+                 },201
+        return {
+              'status': False,
+              'message':'product not found'
+        },404
+
+
+    
+    
 class Create_store(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('username',
