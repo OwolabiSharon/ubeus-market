@@ -32,15 +32,10 @@ api.add_resource(upload_image, '/upload_image')
 api.add_resource(First_page, '/First_page')
 api.add_resource(view_store, '/view_store/<string:name>')
 api.add_resource(view_productimage,'/view_product_image')
-api.add_resource(top_up,'/top_up')
-api.add_resource(add_to_wishlist,'/add_to_wishlist')
-api.add_resource(delete_from_wishlist,'/delete_from_wishlist')
-api.add_resource(add_to_cart,'/add_to_cart')
-api.add_resource(delete_from_cart,'/delete_from_cart')
-api.add_resource(buy_product,'/buy_product')
 
 
 if __name__ == '__main__':
     from db import db
     db.init_app(app)
     app.run(port =5000 , debug =True)
+
